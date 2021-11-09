@@ -7,7 +7,6 @@ export default class FetchPhotos extends React.Component {
         super(props);
 
         this.state = {
-            loading: true,
             photos: [],
         };
 
@@ -15,13 +14,15 @@ export default class FetchPhotos extends React.Component {
     }
 
     async componentDidMount() {
-
         const url = 'https://jsonplaceholder.typicode.com/photos/';
         const photos = await fetch(url);
         const data = await photos.json();
-        this.setState({loading: false, photos: data});
+        this.setState({photos: data});
     }
 
+    
+    // Stores photos as a local variable, calls recursive function
+    // and then sets the state to the new reordered list
     handleClick() {
         let currPhotos = this.state.photos;
         let randomizedPhotos = this.randomizePhotos(currPhotos, 0);
@@ -32,8 +33,8 @@ export default class FetchPhotos extends React.Component {
         if (photos.length === 1) {
             return photos
         };
-        const rand = Math.floor(Math.random() * photos.length);
-        return [photos[rand], ...this.randomizePhotos(photos.filter((_, i) => i !== rand))];
+        const randInt = Math.floor(Math.random() * photos.length); // Generate random number between 0 to photos.length-1
+        return [photos[randInt], ...this.randomizePhotos(photos.filter((_, i) => i !== randInt))]; // Filtering out the photo at index randInt
        
     }
     

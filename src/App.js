@@ -1,6 +1,6 @@
 import FetchPhotos from "./FetchPhotos";
 
-
+// Main function
 function App() {
   return (
     <div className="App">
